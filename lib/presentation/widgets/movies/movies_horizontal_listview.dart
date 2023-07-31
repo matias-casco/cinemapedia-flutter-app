@@ -57,7 +57,7 @@ class _MoviesHorizontalListviewState extends State<MoviesHorizontalListview> {
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return _Slide(movie: widget.movies[index]);
+              return FadeInRight(child: _Slide(movie: widget.movies[index]));
             },
           ))
         ],
@@ -77,7 +77,7 @@ class _Title extends StatelessWidget {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 10, 10, 4),
+      margin: const EdgeInsets.fromLTRB(10, 10, 10, 2),
       child: Row(
         children: [
           if (title != null) Text(title!, style: titleStyle),
