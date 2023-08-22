@@ -19,7 +19,10 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
   SearchMovieDelegate({
     required this.searchMovies,
     required this.initialMovies,
-  });
+  }) : super(
+          searchFieldLabel: 'Buscar películas',
+          // textInputAction: TextInputAction.done
+        );
 
   void clearStreams() {
     debouncedMovies.close();
@@ -28,9 +31,12 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
   void _onQueryChanged(String query) {
     isLoadingStream.add(true);
     if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+
     _debounceTimer = Timer(const Duration(milliseconds: 500), () async {
       final movies = await searchMovies(query);
+
       if (debouncedMovies.isClosed) return;
+
       debouncedMovies.add(movies);
       initialMovies = movies;
       isLoadingStream.add(false);
@@ -46,22 +52,20 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
         return ListView.builder(
           itemCount: movies.length,
-          itemBuilder: (context, index) {
-            return _MovieItem(
-              movie: movies[index],
-              onMovieSelected: (context, movie) {
-                clearStreams();
-                close(context, movie);
-              },
-            );
-          },
+          itemBuilder: (context, index) => _MovieItem(
+            movie: movies[index],
+            onMovieSelected: (context, movie) {
+              clearStreams();
+              close(context, movie);
+            },
+          ),
         );
       },
     );
   }
 
-  @override
-  String get searchFieldLabel => 'Buscar película';
+  // @override
+  // String get searchFieldLabel => 'Buscar película';
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -72,10 +76,9 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
         builder: (context, snapshot) {
           if (snapshot.data ?? false) {
             return SpinPerfect(
-                duration: const Duration(seconds: 20),
+                duration: const Duration(seconds: 7),
                 spins: 10,
                 infinite: true,
-                animate: query.isNotEmpty,
                 child: IconButton(
                   onPressed: () => query = '',
                   icon: const Icon(Icons.refresh_rounded),
@@ -85,9 +88,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
               animate: query.isNotEmpty,
               duration: const Duration(milliseconds: 200),
               child: IconButton(
-                onPressed: () => query = '',
-                icon: const Icon(Icons.clear),
-              ));
+                  onPressed: () => query = '', icon: const Icon(Icons.clear)));
         },
       )
     ];
