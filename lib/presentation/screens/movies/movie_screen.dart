@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
@@ -66,6 +68,13 @@ class _CustomSliverAppBar extends StatelessWidget {
       backgroundColor: Colors.black,
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
+      actions: [
+        IconButton(
+          onPressed: () {},
+          // icon: Icon(Icons.favorite_border),
+          icon: Icon(Icons.favorite_rounded, color: Colors.red),
+        ),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         // titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         // title: Text(
@@ -97,8 +106,11 @@ class _CustomSliverAppBar extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    stops: [0.7, 1.0],
-                    colors: [Colors.transparent, Colors.black87],
+                    stops: [0.0, 0.2],
+                    colors: [
+                      Colors.black45,
+                      Colors.transparent,
+                    ],
                   ),
                 ),
               ),
@@ -107,16 +119,17 @@ class _CustomSliverAppBar extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    stops: [0.0, 0.2],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.85, 1.0],
                     colors: [
-                      Colors.black87,
                       Colors.transparent,
+                      Colors.black38,
                     ],
                   ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
