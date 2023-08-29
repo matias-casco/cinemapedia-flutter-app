@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
@@ -72,7 +70,7 @@ class _CustomSliverAppBar extends StatelessWidget {
         IconButton(
           onPressed: () {},
           // icon: Icon(Icons.favorite_border),
-          icon: Icon(Icons.favorite_rounded, color: Colors.red),
+          icon: const Icon(Icons.favorite_rounded, color: Colors.red),
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
