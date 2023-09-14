@@ -51,6 +51,7 @@ class _MoviesHorizontalListviewState extends State<MoviesHorizontalListview> {
         children: [
           if (widget.title != null || widget.subtitle != null)
             _Title(title: widget.title, subtitle: widget.subtitle),
+          const SizedBox(height: 4),
           Expanded(
               child: ListView.builder(
             controller: scrollController,
@@ -112,25 +113,14 @@ class _Slide extends StatelessWidget {
           width: 150,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              movie.posterPath,
-              fit: BoxFit.cover,
-              width: 150,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress != null) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 60),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    ),
-                  );
-                }
-                return GestureDetector(
-                    onTap: () => context.push('/home/0/movie/${movie.id}'),
-                    child: FadeIn(child: child));
-              },
+            child: GestureDetector(
+              onTap: () => context.push('/home/0/movie/${movie.id}'),
+              child: FadeInImage(
+                height: 220,
+                fit: BoxFit.cover,
+                placeholder: const AssetImage('assets/loaders/loading.gif'),
+                image: NetworkImage(movie.posterPath),
+              ),
             ),
           ),
         ),

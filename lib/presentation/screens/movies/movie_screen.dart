@@ -1,3 +1,4 @@
+import 'package:cinemapedia/presentation/widgets/movies/similar_movies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
@@ -197,26 +198,36 @@ class _MovieDetails extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Wrap(children: [
-            ...movie.genreIds.map((gender) => Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: Chip(
-                    label: Text(gender),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ))
-          ]),
-        ),
+        _Genres(movie: movie),
         _ActorsByMovie(movieId: movie.id.toString()),
-        //todo: mostrar actores
-        const SizedBox(
-          height: 20,
-        )
+        SimilarMovies(movieId: movie.id),
       ],
+    );
+  }
+}
+
+class _Genres extends StatelessWidget {
+  const _Genres({
+    required this.movie,
+  });
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Wrap(children: [
+        ...movie.genreIds.map((gender) => Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: Chip(
+                label: Text(gender),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ))
+      ]),
     );
   }
 }
@@ -237,7 +248,7 @@ class _ActorsByMovie extends ConsumerWidget {
     final actors = actorsByMovie[movieId]!;
 
     return SizedBox(
-      height: 300,
+      height: 254,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: actors.length,
@@ -247,6 +258,7 @@ class _ActorsByMovie extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             width: 135,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Actor Photo
