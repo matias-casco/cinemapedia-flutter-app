@@ -49,7 +49,7 @@ class HomeViewState extends ConsumerState<HomeView> {
             MoviesSlideshow(movies: slideShowMovies),
             MoviesHorizontalListview(
               movies: nowPlayingMovies,
-              title: 'En cines',
+              title: 'No te pierdas',
               subtitle: 'Lunes 20',
               loadNextPage: () {
                 ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
@@ -65,7 +65,7 @@ class HomeViewState extends ConsumerState<HomeView> {
             ),
             MoviesHorizontalListview(
               movies: popularMovies,
-              title: 'Populares',
+              title: 'Más vistos',
               loadNextPage: () {
                 ref.read(popularMoviesProvider.notifier).loadNextPage();
               },
